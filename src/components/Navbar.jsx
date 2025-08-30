@@ -5,6 +5,45 @@ export default function Navbar() {
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <a href="/" className="flex items-center">
+              {/* Logo */}
+              <svg
+                className="h-8 w-8 mr-2 text-purple-500"
+                version="1.0"
+                xmlns="http://www.w3.org/2000/svg"
+                width="500.000000pt"
+                height="500.000000pt"
+                viewBox="0 0 500.000000 500.000000"
+                preserveAspectRatio="xMidYMid meet"
+              >
+                <g
+                  transform="translate(0.000000,500.000000) scale(0.100000,-0.100000)"
+                  fill="currentColor"
+                  stroke="none"
+                >
+                  <path
+                    d="M970 3762 c46 -32 89 -73 109 -106 12 -18 61 -131 110 -252 232 -571
+463 -1135 645 -1579 48 -115 101 -246 118 -290 85 -213 296 -289 474 -171 63
+42 91 83 155 229 39 88 56 115 96 150 26 23 70 62 98 87 27 25 84 75 125 110
+82 71 115 100 206 181 33 30 76 68 95 84 103 91 299 262 329 289 20 17 53 47
+76 66 22 19 71 63 109 96 39 34 111 97 160 140 138 121 156 149 157 240 0 72
+-26 132 -81 182 -20 18 -105 86 -190 150 -85 64 -178 135 -206 157 -252 192
+-326 244 -359 251 -65 12 -134 -27 -165 -93 -19 -39 -13 -26 -176 -423 -80
+-195 -149 -364 -154 -375 -27 -61 -43 -98 -74 -175 -85 -208 -170 -406 -179
+-417 -19 -24 -48 -14 -62 20 -31 72 -48 112 -139 337 -53 129 -109 269 -127
+310 -17 41 -54 131 -81 200 -28 69 -57 140 -65 158 -8 17 -20 47 -28 65 -8 17
+-38 91 -66 162 -97 245 -73 235 -560 234 -356 0 -374 -1 -350 -17z m661 -199
+c8 -10 30 -56 49 -102 32 -81 33 -84 15 -97 -23 -17 -222 -19 -258 -3 -18 8
+-34 36 -62 104 -20 51 -34 98 -31 104 5 7 55 11 140 11 114 0 135 -2 147 -17z
+m1766 -345 c204 -155 213 -162 213 -176 0 -5 -44 -45 -97 -88 -54 -44 -109
+-89 -123 -101 -91 -78 -466 -380 -468 -378 -2 2 10 45 26 97 17 51 65 212 107
+358 42 146 80 276 84 290 8 22 13 41 37 128 3 14 11 21 19 18 8 -3 98 -69 202
+-148z m-1585 -95 c10 -9 18 -20 18 -25 0 -4 8 -27 19 -51 34 -76 43 -106 36
+-116 -7 -13 -263 -15 -282 -3 -13 8 -71 140 -73 169 -5 43 -5 43 132 43 108 0
+135 -3 150 -17z m182 -445 c8 -13 29 -58 46 -102 42 -106 41 -106 -121 -106
+-149 0 -137 -8 -189 124 -42 106 -41 106 121 106 122 0 129 -1 143 -22z"
+                  />
+                </g>
+              </svg>
               <span className="text-purple-500 font-bold text-3xl">
                 Vel<span className="text-white">ura</span>
               </span>
@@ -243,7 +282,10 @@ export default function Navbar() {
                         <p className="text-sm font-medium text-white truncate">
                           Movie Title
                         </p>
-                        <p className="text-xs text-neutral-400"> Movies release date</p>
+                        <p className="text-xs text-neutral-400">
+                          {" "}
+                          Movies release date
+                        </p>
                       </div>
                     </button>
                   </li>
@@ -252,7 +294,7 @@ export default function Navbar() {
               {/* Conditional Rendring */}
               <div className="absolute mt-2 w-full bg-neutral-800 rounded-lg shadow-lg overflow-hidden z-50">
                 <div className="p-4 text-center text-neutral-400p text-sm">
-                    No Movies found matching...
+                  No Movies found matching...
                 </div>
               </div>
             </div>

@@ -38,7 +38,7 @@ export default function HeroSection() {
                 {/* Conditional rendring */}
                 <>
                   <span className="text-neutral-400">.</span>
-                  <span className="bg-neutral-700 text-neutral-300 text-xs px-11.5 py-0.5">
+                  <span className="bg-neutral-700 text-neutral-300 text-xs px-11.5 py-0.5 rounded">
                     18+
                   </span>
                 </>

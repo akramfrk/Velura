@@ -11,8 +11,8 @@ export default function MovieContent() {
         <MovieSlider />
         <GenreSection />
       </div>
-      {/* Conditional Rendring
-      <MovieDetails /> */}
+      {/* Conditional Rendring */}
+      {/* <MovieDetails /> */}
     </>
   );
 }

@@ -1,3 +1,4 @@
+import Footer from "./components/Footer";
 import MovieContent from "./components/MovieContent";
 import Navbar from "./components/Navbar";
 
@@ -8,6 +9,7 @@ export default function App() {
       <main>
         <MovieContent />
       </main>
+      <Footer />
     </div>
   )
 }
