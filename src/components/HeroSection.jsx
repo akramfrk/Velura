@@ -1,7 +1,53 @@
+import { useEffect, useState } from "react";
+import { useMovies } from "../context/MoviesContext";
+import { getImage } from "../services/api";
+
 export default function HeroSection() {
+  const { trendingMovies, loading } = useMovies();
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const featuredMovies = trendingMovies.slice(0, 5);
+
+  useEffect(() => {
+    if (loading || featuredMovies.length === 0) return;
+    const interval = setInterval(() => {
+      setIsTransitioning(true);
+      setTimeout(() => {
+        setCurrentSlide((prev) => (prev + 1) % featuredMovies.length);
+        setIsTransitioning(false);
+      }, 500);
+    }, 8000);
+    return () => clearInterval();
+  }, [loading, featuredMovies.length]);
+
+  if (loading || featuredMovies.length === 0) {
+    return (
+      <div className="relative w-full h-screen flex items-center justify-center bg-neutral-900">
+        <div className="animate-pulse flex flex-col items-center">
+          <div className="w-16 h-16 border-4 border-pulse-500 border-t-transparent rounded-full animate-spin"></div>
+          <p className="mt-4 text-neutral-400">Loading movies...</p>
+        </div>
+      </div>
+    );
+  }
+
+  const currentMovie = featuredMovies[currentSlide];
+  const formatRating = (rating) => {
+    return (Math.round(rating * 10) / 10).toFixed(1);
+  };
   return (
     <div className="relative w-full h-screen">
-      <div className="absolute inset-0 bg-cover bg-center bg-neutral-900 transition-all duration-700">
+      <div
+        className={`absolute inset-0 bg-cover bg-center bg-neutral-900 transition-all duration-700 ${
+          isTransitioning ? "opacity-0" : "opacity-100"
+        }`}
+        style={{
+          backgroundImage: `url(${getImage(
+            currentMovie.backdrop_path,
+            "original"
+          )})`,
+        }}
+      >
         {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-neutral-900 via-neutral-900/70 to bg-neutral-900/20">
           <div className="absolute inset-0 bg-gradient-to-r from-neutral-900 to-transparent" />
@@ -13,23 +59,25 @@ export default function HeroSection() {
         <div className="container mx-auto px-4 w-4/5">
           <div className="max-w-3xl">
             {/* Movies info */}
-            <div className={`transition-all duration-700`}>
+            <div className={`transition-all duration-700 ${isTransitioning ? "opacity-0" : "opacity-100"}`}>
               <div className="flex items-center space-x-3 mb-4">
                 <span className="bg-purple-500/90 text-white text-xs font-semibold px-2 py-1 rounded-sm">
                   FEATURED
                 </span>
                 {/* Conditional Rendring */}
-                <div className="flex items-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 text-yellow-400"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                  <span>Movie Voting Average</span>
-                </div>
+                {currentMovie.vote_average > 0 && (
+                  <div className="flex items-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5 text-yellow-400"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                    <span>{formatRating(currentMovie.vote_average)}</span>
+                  </div>
+                )}
                 {/* Conditional Rendring  */}
                 <span className="text-neutral-400">.</span>
                 <span className="text-neutral-300 text-sm">
