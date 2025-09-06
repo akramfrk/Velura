@@ -59,7 +59,11 @@ export default function HeroSection() {
         <div className="container mx-auto px-4 w-4/5">
           <div className="max-w-3xl">
             {/* Movies info */}
-            <div className={`transition-all duration-700 ${isTransitioning ? "opacity-0" : "opacity-100"}`}>
+            <div
+              className={`transition-all duration-700 ${
+                isTransitioning ? "opacity-0" : "opacity-100"
+              }`}
+            >
               <div className="flex items-center space-x-3 mb-4">
                 <span className="bg-purple-500/90 text-white text-xs font-semibold px-2 py-1 rounded-sm">
                   FEATURED
@@ -81,22 +85,24 @@ export default function HeroSection() {
                 {/* Conditional Rendring  */}
                 <span className="text-neutral-400">.</span>
                 <span className="text-neutral-300 text-sm">
-                  Movies Release Date
+                  {currentMovie.release_date?.substring(0, 4) || "N/A"}
                 </span>
                 {/* Conditional rendring */}
-                <>
-                  <span className="text-neutral-400">.</span>
-                  <span className="bg-neutral-700 text-neutral-300 text-xs px-11.5 py-0.5 rounded">
-                    18+
-                  </span>
-                </>
+                {currentMovie.adult && (
+                  <>
+                    <span className="text-neutral-400">.</span>
+                    <span className="bg-neutral-700 text-neutral-300 text-xs px-11.5 py-0.5 rounded">
+                      18+
+                    </span>
+                  </>
+                )}
                 {/* Conditional Rendring */}
               </div>
               <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
-                Movies Title
+                {currentMovie.title}
               </h1>
               <p className="text-neutral-300 text-base md:text-lg mb-8 line-clamp-3 md:line-clamp-4 max-w-2xl">
-                Movie Overview
+                {currentMovie.overview}
               </p>
               <div className="flex flex-wrap gap-4">
                 <button className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg flex items-center gap-2 transition-all">
@@ -137,9 +143,26 @@ export default function HeroSection() {
         </div>
       </div>
       {/* Pagination */}
-      <div className="absolute buttom-10 left-0 right-0 flex justify-center gap-2 z-10">
-        {/* Conditional rendring */}
-        <button className={`h-1.5 rounded-full transition-all`}></button>
+      <div className="absolute bottom-10 left-0 right-0 flex justify-center gap-2 z-10">
+        {featuredMovies.map((_, index) => {
+          return (
+            <button
+              key={index}
+              onClick={() => {
+                setIsTransitioning(true);
+                setTimeout(() => {
+                  setCurrentSlide(index);
+                  setIsTransitioning(false);
+                }, 500);
+              }}
+              className={`h-1.5 rounded-full transition-all ${
+                currentSlide === index
+                  ? "w-8 bg-purple-500"
+                  : "w-4 bg-neutral-600/50"
+              }`}
+            ></button>
+          );
+        })}
       </div>
     </div>
   );
