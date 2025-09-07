@@ -7,7 +7,6 @@ export default function GenreSection() {
   const [selectedGenre, setSelectedGenre] = useState(null);
   const [genreMovies, setGenreMovies] = useState([]);
   const [loadingMovies, setLoadingMovies] = useState([]);
-
   useEffect(() => {
     if (!selectedGenre && genres.length > 0) {
       setSelectedGenre(genres[0]);
@@ -24,6 +23,11 @@ export default function GenreSection() {
     };
     loadGenreMovies();
   }, [selectedGenre]);
+
+    const handleMovieClick = (movieId) => {
+    openMovieDetails(movieId);
+  };
+
   const formatRating = (rating) => {
     return (Math.round(rating * 10) / 10).toFixed(1);
   };
@@ -96,7 +100,7 @@ export default function GenreSection() {
                           {movie.release_date?.substring(0, 4) || "N/A"}
                         </span>
                       </div>
-                      <button className="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-md flex items-center justify-center gap-1 transition-all text-sm mt-3">
+                      <button onClick={() => handleMovieClick(movie.id)} className="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-md flex items-center justify-center gap-1 transition-all text-sm mt-3">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           className="h-4 w-4"

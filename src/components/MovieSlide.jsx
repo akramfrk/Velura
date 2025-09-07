@@ -6,7 +6,7 @@ export default function MovieSlider({ title, subtitle = "", movies }) {
   const slideRef = useRef(null);
   const [isScrolling, setIsScrolling] = useState(false);
   const [hoveredMovieId, setHoveredMovieId] = useState(null);
-  const { openMoviesDetails } = useMovies();
+  const { openMovieDetails } = useMovies();
 
   const scroll = (direction) => {
     if (isScrolling) return;
@@ -32,7 +32,7 @@ export default function MovieSlider({ title, subtitle = "", movies }) {
   };
 
   const handleMovieClick = (movieId) => {
-    openMoviesDetails(movieId);
+    openMovieDetails(movieId);
   };
 
   if (!movies || movies.length === 0) {
@@ -139,7 +139,7 @@ export default function MovieSlider({ title, subtitle = "", movies }) {
                               {movie.release_date?.substring(0, 4) || "N/A"}
                             </span>
                           </div>
-                          <button className="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-md flex items-center justify-center gap-1 transition-all">
+                          <button onClick={() => handleMovieClick(movie.id)} className="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-md flex items-center justify-center gap-1 transition-all">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               className="h-4 w-4"
