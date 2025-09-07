@@ -73,7 +73,7 @@ export default function GenreSection() {
           {/* Map Method */}
           {genreMovies.map((movie) => {
             return (
-              <div className="group cursor-pointer" key={movie.id}>
+              <div className="group cursor-pointer" key={movie.id} onClick={() => handleMovieClick(movie.id)}>
                 <div className="relative rounded-lg overflow-hidden bg-neutral-800">
                   <div className="aspect-[2/3]">
                     <img

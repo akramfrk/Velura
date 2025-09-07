@@ -108,6 +108,7 @@ export default function MovieSlider({ title, subtitle = "", movies }) {
                   key={movie.id}
                   onMouseEnter={() => setHoveredMovieId(movie.id)}
                   onMouseLeave={() => setHoveredMovieId(null)}
+                  onClick={() => handleMovieClick(movie.id)}
                 >
                   <div className="rounded-lg overflow-hidden bg-neutral-800">
                     <div className="relative aspect-[2/3]">

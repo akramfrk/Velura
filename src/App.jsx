@@ -13,7 +13,7 @@ export default function App() {
           <MovieContent />
         </main>
         <Footer />
-        {window.scrollY > 50 ? <ScrollToTop /> : null}
+        <ScrollToTop />
       </div>
     </MoviesProvider>
   );
