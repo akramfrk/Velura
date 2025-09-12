@@ -46,8 +46,6 @@ export default function MovieDetails({ moviesId, onClose }) {
       maximumFractionDigits: 1,
     }).format(revenue);
   };
-  console.log(movie);
-  
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-neutral-900/95 backdrop-blur-sm overflow-auto">
@@ -215,23 +213,11 @@ export default function MovieDetails({ moviesId, onClose }) {
 
                     {/* Buttons */}
                     <div className="mt-8 flex flex-wrap gap-3">
-                      <button className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg flex items-center gap-2 transition-colors">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-5 w-5"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                        Watch Now
-                      </button>
-
-                      <button className="bg-neutral-700 hover:bg-neutral-600 text-white px-6 py-3 rounded-lg flex items-center gap-2 transition-all">
+                      <a
+                        href={`https://www.themoviedb.org/movie/${movie.id}`}
+                        target="_blank"
+                        className="bg-neutral-700 hover:bg-purple-600 text-white px-6 py-3 rounded-lg flex items-center gap-2 transition-all"
+                      >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           className="h-5 w-5"
@@ -247,7 +233,7 @@ export default function MovieDetails({ moviesId, onClose }) {
                           />
                         </svg>
                         Add to Watch List
-                      </button>
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -303,7 +289,9 @@ export default function MovieDetails({ moviesId, onClose }) {
                           <h3 className="text-neutral-400 text-sm mb-1">
                             Budget
                           </h3>
-                          <p className="text-white">{formatRevenue(movie.budget)}</p>
+                          <p className="text-white">
+                            {formatRevenue(movie.budget)}
+                          </p>
                         </div>
                       )}
                       {movie.revenue && (
@@ -311,7 +299,9 @@ export default function MovieDetails({ moviesId, onClose }) {
                           <h3 className="text-neutral-400 text-sm mb-1">
                             Revenue
                           </h3>
-                          <p className="text-white">{formatRevenue(movie.revenue)}</p>
+                          <p className="text-white">
+                            {formatRevenue(movie.revenue)}
+                          </p>
                         </div>
                       )}
                       {movie.status && (
@@ -343,14 +333,20 @@ export default function MovieDetails({ moviesId, onClose }) {
                     {movie.vote_average ? (
                       <div className="flex items-center">
                         <div className="w-24 h-24 rounded-full border-4 border-purple-500 flex items-center justify-center mr-4">
-                          <span className="text-2xl font-bold">{formatRating(movie.vote_average)}</span>
+                          <span className="text-2xl font-bold">
+                            {formatRating(movie.vote_average)}
+                          </span>
                         </div>
                         <div>
-                          <p className="text-neutral-300">From {movie.vote_count.toLocaleString()} votes</p>
+                          <p className="text-neutral-300">
+                            From {movie.vote_count.toLocaleString()} votes
+                          </p>
                           <div className="w-full bg-neutral-700 rounded-full h-2.5 mt-2">
                             <div
                               className="bg-purple-600 h-2.5 rounded-full"
-                              style={{ width: `${(movie.vote_average / 10) * 100}%` }}
+                              style={{
+                                width: `${(movie.vote_average / 10) * 100}%`,
+                              }}
                             ></div>
                           </div>
                         </div>
@@ -361,32 +357,19 @@ export default function MovieDetails({ moviesId, onClose }) {
                   </div>
 
                   {/* IMDB and Homepage Link */}
-                  <div className="mt-8 space-y-4 md:col-span-2">
+                  <div className="mt-8 flex flex-wrap gap-4 md:col-span-2">
                     <a
                       href={movie.homepage}
-                      className="inline-flex items-center bg-neutral-700 hover:bg-neutral-600 text-white px-4 py-2 rounded transition-all mr-2"
+                      target="_blank"
+                      className="inline-flex items-center bg-neutral-700 hover:bg-neutral-600 text-white px-4 py-2 rounded transition-all"
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5 mr-2"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
-                        />
-                      </svg>
                       Official Website
                     </a>
 
                     <a
                       href={`https://www.imdb.com/title/${movie.imdb_id}`}
                       target="_blank"
-                      className="inline-flex items-center bg-[#f4c418] hover:border-amber-600 text-white px-4 py-2 rounded transition-colors ml-2 bg-[url('https://m.media-amazon.com/images/G/01/imdb/images-ANDW73HA/favicon_desktop_32x32._CB1582158068_.png')] bg-no-repeat bg-left pl-8"
+                      className="inline-flex items-center bg-amber-400 hover:bg-amber-500 text-white px-4 py-2 rounded transition-colors"
                     >
                       View on IMDB
                     </a>
