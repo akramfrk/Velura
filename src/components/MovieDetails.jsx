@@ -231,7 +231,7 @@ export default function MovieDetails({ moviesId, onClose }) {
                       <a
                         href={`https://www.themoviedb.org/movie/${movie.id}`}
                         target="_blank"
-                        className="bg-neutral-700 hover:bg-purple-600 text-white px-6 py-3 rounded-lg flex items-center gap-2 transition-all"
+                        className="bg-neutral-700 hover:bg-neutral-600 text-white px-6 py-3 rounded-lg flex items-center gap-2 transition-all"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
