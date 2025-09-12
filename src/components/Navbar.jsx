@@ -1,6 +1,9 @@
 import { useState, useEffect, useRef } from "react";
+import { getImage, searchMovies } from "../services/api";
+import { useMovies } from "../context/MoviesContext";
 
 export default function Navbar() {
+  const { openMovieDetails } = useMovies();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -16,6 +19,58 @@ export default function Navbar() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    const handleSearch = async () => {
+      if (searchQuery.trim().length > 2) {
+        setIsSearching(true);
+        try {
+          const result = await searchMovies(searchQuery);
+          setSearchResult(result ? result.slice(0, 5) : []);
+        } catch (error) {
+          console.error("Error fetching search results:", error);
+        } finally {
+          setIsSearching(false);
+          setShowSearchResults(true);
+        }
+      } else {
+        setSearchResult([]);
+        setShowSearchResults(false);
+      }
+    };
+    const debounceTimer = setTimeout(() => {
+      handleSearch();
+    }, 500);
+    return () => clearTimeout(debounceTimer);
+  }, [searchQuery]);
+
+  const handleSearchFocus = () => {
+    if (searchQuery.trim().length > 2 && searchResult.length > 0) {
+      setShowSearchResults(true);
+    }
+  };
+
+  const handleClickOutside = (event) => {
+    if (
+      searchContainerRef.current &&
+      !searchContainerRef.current.contains(event.target)
+    ) {
+      setShowSearchResults(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const handleMovieSelect = (movieId) => {
+    openMovieDetails(movieId);
+    setShowSearchResults(false);
+    setSearchQuery("");
+  };
 
   return (
     <header
@@ -108,6 +163,9 @@ m1766 -345 c204 -155 213 -162 213 -176 0 -5 -44 -45 -97 -88 -54 -44 -109
             <div className="relative">
               <input
                 type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onFocus={handleSearchFocus}
                 placeholder="Search Movies ..."
                 className="bg-neutral-800/80 text-white px-4 py-2 pr-10 rounded-full text-sm w-48 focus:w-64 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500/50"
               />
@@ -158,26 +216,36 @@ m1766 -345 c204 -155 213 -162 213 -176 0 -5 -44 -45 -97 -88 -54 -44 -109
             {showSearchResults && searchResult && searchResult.length > 0 && (
               <div className="absolute mt-2 w-72 bg-neutral-800 rounded-lg overflow-hidden z-50">
                 <ul className="divide-y divide-neutral-700">
-                  <li className="hover:bg-neutral-700">
-                    <button className="flex items-center p-3 w-full text-left">
-                      <div className="w-10 h-14 bg-neutral-700 rounded overflow-hidden flex-shrink-0">
-                        {/* Conditional Rendring */}
-                        <img src="" alt="" className="w-full h-full object-cover" />
-                        {/* Else */}
-                        <div className="w-full h-full flex items-center justify-center text-neutral-500 text-xs">
-                          No Image
+                  {searchResult.map((movie) => (
+                    <li className="hover:bg-neutral-700" key={movie.id}>
+                      <button
+                        className="flex items-center p-3 w-full text-left"
+                        onClick={() => handleMovieSelect(movie.id)}
+                      >
+                        <div className="w-10 h-14 bg-neutral-700 rounded overflow-hidden flex-shrink-0">
+                          {movie.poster_path ? (
+                            <img
+                              src={getImage(movie.poster_path, "w92")}
+                              alt={movie.title}
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center text-neutral-500 text-xs">
+                              No Image
+                            </div>
+                          )}
                         </div>
-                      </div>
-                      <div className="ml-3 flex-1">
-                        <p className="text-sm font-medium text-white truncate">
-                          Movie Title
-                        </p>
-                        <p className="text-xs text-neutral-400">
-                          Movie Release Date
-                        </p>
-                      </div>
-                    </button>
-                  </li>
+                        <div className="ml-3 flex-1">
+                          <p className="text-sm font-medium text-white truncate">
+                            {movie.title}
+                          </p>
+                          <p className="text-xs text-neutral-400">
+                            {movie.release_date?.split("-")[0] || "N/A"}
+                          </p>
+                        </div>
+                      </button>
+                    </li>
+                  ))}
                 </ul>
               </div>
             )}
@@ -231,7 +299,7 @@ m1766 -345 c204 -155 213 -162 213 -176 0 -5 -44 -45 -97 -88 -54 -44 -109
             )}
           </button>
         </div>
-        
+
         {/* Mobile Navigation Conditional Rendring - Enhanced UI */}
         {isMobileMenuOpen && (
           <div className="mt-4 pb-4 md:hidden bg-neutral-900/95 backdrop-blur-lg rounded-xl border border-neutral-800 shadow-xl overflow-hidden transition-all duration-300 ease-out">
@@ -240,42 +308,40 @@ m1766 -345 c204 -155 213 -162 213 -176 0 -5 -44 -45 -97 -88 -54 -44 -109
                 href="#"
                 className="block text-white hover:bg-purple-900/30 hover:text-purple-300 transition-all duration-200 py-3 px-4 rounded-lg mx-2"
               >
-                <span className="flex items-center">
-                  Home
-                </span>
+                <span className="flex items-center">Home</span>
               </a>
               <a
                 href="#trending"
                 className="block text-white hover:bg-purple-900/30 hover:text-purple-300 transition-all duration-200 py-3 px-4 rounded-lg mx-2"
               >
-                <span className="flex items-center">
-                  Trending
-                </span>
+                <span className="flex items-center">Trending</span>
               </a>
               <a
                 href="#popular"
                 className="block text-white hover:bg-purple-900/30 hover:text-purple-300 transition-all duration-200 py-3 px-4 rounded-lg mx-2"
               >
-                <span className="flex items-center">
-                  Popular
-                </span>
+                <span className="flex items-center">Popular</span>
               </a>
               <a
                 href="#top-rated"
                 className="block text-white hover:bg-purple-900/30 hover:text-purple-300 transition-all duration-200 py-3 px-4 rounded-lg mx-2"
               >
-                <span className="flex items-center">
-                  Top Rated
-                </span>
+                <span className="flex items-center">Top Rated</span>
               </a>
             </div>
-            
+
             <div className="px-4 py-3 border-t border-neutral-800 mt-2">
               {/* Mobile Search */}
-              <div className="relative mt-3 search-container">
+              <div
+                className="relative mt-3 search-container"
+                ref={searchContainerRef}
+              >
                 <div className="relative">
                   <input
                     type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onFocus={handleSearchFocus}
                     placeholder="Search Movies ..."
                     className="bg-neutral-800/80 text-white px-4 py-3 pr-10 rounded-full text-sm w-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500/50"
                   />
@@ -322,36 +388,44 @@ m1766 -345 c204 -155 213 -162 213 -176 0 -5 -44 -45 -97 -88 -54 -44 -109
                 </div>
 
                 {/* Mobile Search result Conditional rendring */}
-                {showSearchResults && searchResult && searchResult.length > 0 && (
-                  <div className="mt-2 w-full bg-neutral-800 rounded-lg shadow-lg overflow-hidden z-50">
-                    <ul className="divide-y divide-neutral-700">
-                      <li className="hover:bg-neutral-700">
-                        <button className="flex items-center p-3 w-full text-left">
-                          <div className="w-10 h-14 bg-neutral-700 rounded overflow-hidden flex-shrink-0">
-                            {/* Conditional rendring */}
-                            <img
-                              src=""
-                              alt=""
-                              className="w-full h-full object-cover"
-                            />
-                            {/* Else */}
-                            <div className="w-full h-full flex items-center justify-center text-neutral-500 text-xs">
-                              No Image
-                            </div>
-                          </div>
-                          <div className="ml-3 flex-1">
-                            <p className="text-sm font-medium text-white truncate">
-                              Movie Title
-                            </p>
-                            <p className="text-xs text-neutral-400">
-                              Movies release date
-                            </p>
-                          </div>
-                        </button>
-                      </li>
-                    </ul>
-                  </div>
-                )}
+                {showSearchResults &&
+                  searchResult &&
+                  searchResult.length > 0 && (
+                    <div className="mt-2 w-full bg-neutral-800 rounded-lg shadow-lg overflow-hidden z-50">
+                      <ul className="divide-y divide-neutral-700">
+                        {searchResult.map((movie) => (
+                          <li className="hover:bg-neutral-700" key={movie.id}>
+                            <button
+                              className="flex items-center p-3 w-full text-left"
+                              onClick={() => handleMovieSelect(movie.id)}
+                            >
+                              <div className="w-10 h-14 bg-neutral-700 rounded overflow-hidden flex-shrink-0">
+                                {movie.poster_path ? (
+                                  <img
+                                    src={getImage(movie.poster_path, "w92")}
+                                    alt={movie.title}
+                                    className="w-full h-full object-cover"
+                                  />
+                                ) : (
+                                  <div className="w-full h-full flex items-center justify-center text-neutral-500 text-xs">
+                                    No Image
+                                  </div>
+                                )}
+                              </div>
+                              <div className="ml-3 flex-1">
+                                <p className="text-sm font-medium text-white truncate">
+                                  {movie.title}
+                                </p>
+                                <p className="text-xs text-neutral-400">
+                                  {movie.release_date?.split("-")[0] || "N/A"}
+                                </p>
+                              </div>
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 {/* Conditional Rendring */}
                 {showSearchResults &&
                   searchQuery.trim().length > 2 &&

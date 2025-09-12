@@ -16,20 +16,22 @@ export default function Footer() {
             </p>
             <div className=" flex space-x-4">
               <a
-                href="#"
+                href="https://www.linkedin.com/in/ferkioui-akram/"
+                target="_blank"
                 className="text-neutral-500 hover:text-purple-500 transition-colors"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  fill="currentColor"
                   viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-5 h-5"
                 >
-                  <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" />
+                  <path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z" />
                 </svg>
               </a>
               <a
-                href="#"
+                href="https://www.instagram.com/akram.frk/"
+                target="_blank"
                 className="text-neutral-500 hover:text-purple-500 transition-colors"
               >
                 <svg
@@ -42,59 +44,81 @@ export default function Footer() {
                 </svg>
               </a>
               <a
-                href="#"
+                href="https://github.com/akramfrk"
+                target="_blank"
                 className="text-neutral-500 hover:text-purple-500 transition-colors"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
-                  className="h-5 w-5"
                   fill="currentColor"
+                  className="h-5 w-5"
                 >
-                  <path d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.73 0 1.323-.593 1.323-1.325V1.325C24 .593 23.407 0 22.675 0z" />
+                  <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0012 2z" />
                 </svg>
               </a>
             </div>
           </div>
           <div>
-            <h3 className="text-white font-semibold text-lg mb-4">Quick Links</h3>
+            <h3 className="text-white font-semibold text-lg mb-4">
+              Quick Links
+            </h3>
             <ul className="space-y-2 text-sm">
-                <li>
-                    <a href="/" className="hover:text-purple-400 transition-all">Home</a>
-                </li>
-                <li>
-                    <a href="#trending" className="hover:text-purple-400 transition-all">Trending</a>
-                </li>
-                <li>
-                    <a href="#popular" className="hover:text-purple-400 transition-all">Popular</a>
-                </li>
-                <li>
-                    <a href="#top-rated" className="hover:text-purple-400 transition-all">Top Rated</a>
-                </li>
-                <li>
-                    <a href="#genres" className="hover:text-purple-400 transition-all">Brows by Genres</a>
-                </li>
+              <li>
+                <a href="/" className="hover:text-purple-400 transition-all">
+                  Home
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#trending"
+                  className="hover:text-purple-400 transition-all"
+                >
+                  Trending
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#popular"
+                  className="hover:text-purple-400 transition-all"
+                >
+                  Popular
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#top-rated"
+                  className="hover:text-purple-400 transition-all"
+                >
+                  Top Rated
+                </a>
+              </li>
             </ul>
           </div>
           <div>
             <h3 className="text-white font-semibold text-lg mb-4">Resources</h3>
             <ul className="space-y-2 text-sm">
-                <li>
-                    <a href="#" className="hover:text-purple-400 transition-all">About</a>
-                </li>
-                <li>
-                    <a href="#" className="hover:text-purple-400 transition-all">Developer</a>
-                </li>
-                <li>
-                    <a href="#" className="hover:text-purple-400 transition-all">Help Center</a>
-                </li>
+              <li>
+                <a href="https://github.com/akramfrk/Velura" target="_blank" className="hover:text-purple-400 transition-all">
+                  About
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/akramfrk" target="_blank" className="hover:text-purple-400 transition-all">
+                  Developer
+                </a>
+              </li>
             </ul>
           </div>
           <div>
-            <p className="text-xs">© 2025 Velura. All rights reserved.<br className="md:hidden"/>
-            <span className="hidden md:inline">.</span>
-            Powered by{" "}
-            <a href="#" className="text-purple-400 hover:text-purple-300">TMDB API</a>
+            <p className="text-xs">
+              © 2025 Velura. All rights reserved.
+              <br className="md:hidden" />
+              <span className="hidden md:inline">.</span>
+              Powered by{" "}
+              <a href="#" className="text-purple-400 hover:text-purple-300">
+                TMDB API
+              </a>
             </p>
           </div>
         </div>

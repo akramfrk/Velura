@@ -33,7 +33,7 @@ export default function GenreSection() {
   };
   if (loading || !selectedGenre) {
     return (
-      <section className="py-12 bg-neutral-900/50" id="">
+      <section className="py-12 bg-neutral-900/50">
         <div className="container mx-auto px-4 w-4/5">
           <div className="h-64 flex items-center justify-center">
             <div className="animate-pulse">

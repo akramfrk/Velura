@@ -3,7 +3,7 @@ import { useMovies } from "../context/MoviesContext";
 import { getImage } from "../services/api";
 
 export default function HeroSection() {
-  const { trendingMovies, loading } = useMovies();
+  const { trendingMovies, loading, openMovieDetails } = useMovies();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const featuredMovies = trendingMovies.slice(0, 5);
@@ -35,6 +35,10 @@ export default function HeroSection() {
   const formatRating = (rating) => {
     return (Math.round(rating * 10) / 10).toFixed(1);
   };
+
+  const handleMovieSelect = (movieId) => {
+    openMovieDetails(movieId)
+  }
   return (
     <div className="relative w-full h-screen">
       <div
@@ -105,7 +109,7 @@ export default function HeroSection() {
                 {currentMovie.overview}
               </p>
               <div className="flex flex-wrap gap-4">
-                <button className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg flex items-center gap-2 transition-all">
+                <button className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg flex items-center gap-2 transition-all" onClick={() => handleMovieSelect(currentMovie.id)}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-5 w-5"
@@ -118,9 +122,11 @@ export default function HeroSection() {
                       clipRule="evenodd"
                     />
                   </svg>
-                  Watch Now
+                  View Details
                 </button>
-                <button className="bg-neutral-800/80 hover:bg-neutral-700/80 text-white px-6 py-3 rounded-lg flex items-center gap-2 transition-all border border-neutral-600">
+                <a href={`https://www.themoviedb.org/movie/${currentMovie.id}`}
+                target="_blank"
+                className="bg-neutral-800/80 hover:bg-neutral-700/80 text-white px-6 py-3 rounded-lg flex items-center gap-2 transition-all border border-neutral-600">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-5 w-5"
@@ -136,7 +142,7 @@ export default function HeroSection() {
                     />
                   </svg>
                   Add to watch List
-                </button>
+                </a>
               </div>
             </div>
           </div>

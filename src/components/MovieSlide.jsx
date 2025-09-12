@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { getImage } from "../services/api";
 import { useMovies } from "../context/MoviesContext";
 
-export default function MovieSlider({ title, subtitle = "", movies }) {
+export default function MovieSlider({ title, subtitle = "", movies, id }) {
   const slideRef = useRef(null);
   const [isScrolling, setIsScrolling] = useState(false);
   const [hoveredMovieId, setHoveredMovieId] = useState(null);
@@ -40,7 +40,7 @@ export default function MovieSlider({ title, subtitle = "", movies }) {
   }
 
   return (
-    <section className="py-12" id="">
+    <section className="py-12" id={id}>
       <div className="container mx-auto px-4 w-4/5">
         <div className="flex items-baseline justify-between mb-8">
           <div className="text-2xl md:text-3xl font-bold text-white">
